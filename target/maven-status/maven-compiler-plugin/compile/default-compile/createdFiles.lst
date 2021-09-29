@@ -1,0 +1,12 @@
+com/gestionmemoria/utils/Utils.class
+com/gestionmemoria/controlador/Memoria.class
+com/gestionmemoria/init/GestionMemoriaLauncher.class
+com/gestionmemoria/applet/GestionMemoriaForm$3.class
+com/gestionmemoria/controlador/ModeloMemoria.class
+com/gestionmemoria/utils/Constants.class
+com/gestionmemoria/applet/GestionMemoriaForm$4.class
+com/gestionmemoria/controlador/ParticionesFijas.class
+com/gestionmemoria/applet/GestionMemoriaForm.class
+com/gestionmemoria/applet/GestionMemoriaForm$2.class
+com/gestionmemoria/applet/GestionMemoriaForm$1.class
+com/gestionmemoria/controlador/Particion.class
