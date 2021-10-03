@@ -1,17 +1,17 @@
 
 package com.gestionmemoria.init;
-
-import com.gestionmemoria.applet.GestionMemoriaForm;
-import java.awt.BorderLayout;
-import javax.swing.JFrame;
-
+import com.gestionmemoria.modelo.Modelo;
 
 public class GestionMemoriaLauncher {
     
+    private Modelo app;
+            
     public static void main(String args[]){
-        GestionMemoriaForm gestionMemoria = new GestionMemoriaForm();
-        gestionMemoria.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gestionMemoria.setLayout(new BorderLayout());
-        gestionMemoria.setVisible(true);
+        new GestionMemoriaLauncher();
+    }
+    
+    public GestionMemoriaLauncher(){
+       app = new Modelo();
+       app.iniciarAplicacion();
     }
 }
