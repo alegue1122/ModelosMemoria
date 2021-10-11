@@ -11,6 +11,15 @@ public class Particion {
     private double totalMemoriaParticion;
     private String procesoEnParticion;
     private PanelParticionUI panelParticionUI;
+
+    public boolean isState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
+    }
+    private boolean state;
     
     public Particion(){
         

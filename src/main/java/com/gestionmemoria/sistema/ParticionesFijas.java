@@ -3,6 +3,7 @@ package com.gestionmemoria.sistema;
 import static com.gestionmemoria.sistema.Memoria.pixelUltimaParticion;
 import com.gestionmemoria.utils.Constants;
 import com.gestionmemoria.utils.Utils;
+import com.gestionmemoria.vista.GestionMemoriaForm;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.SwingUtilities;
@@ -93,4 +94,6 @@ public class ParticionesFijas extends ModeloMemoria{
         }
         return particionLibre;
     }
+
+  
 }

@@ -1,9 +1,11 @@
 package com.gestionmemoria.modelo;
 
+import com.gestionmemoria.sistema.Memoria;
 import com.gestionmemoria.vista.GestionMemoriaForm;
 import com.gestionmemoria.sistema.ModeloMemoria;
 import com.gestionmemoria.sistema.Particion;
 import com.gestionmemoria.sistema.ParticionesFijas;
+import com.gestionmemoria.sistema.ParticionesVariables;
 import com.gestionmemoria.sistema.Proceso;
 import com.gestionmemoria.vista.TablaProcesoCellRender;
 import com.gestionmemoria.utils.Constants;
@@ -42,6 +44,12 @@ public class Modelo {
         switch (modeloSeleccionado) {
             case Constants.MODEL_PARTICION_EFIJA:
                 modeloMemoria = new ParticionesFijas();
+                gestionMemoriaForm.jLabel4.setText("Cantidad de Particiones:");
+            break;
+            case Constants.MODEL_PARTICION_EDINAMICA:
+                
+                modeloMemoria = new ParticionesVariables(gestionMemoriaForm);
+                gestionMemoriaForm.jLabel4.setText("Tamaño de la Partición: (MBs)");
             break;
             default: 
                 System.out.println("No seleccionado");
@@ -54,7 +62,8 @@ public class Modelo {
     
     public void crearParticiones(){
         String cantidadparticiones = getGestionMemoriaForm().getTextCantidadParticiones().getText();
-        if(cantidadparticiones != null && !cantidadparticiones.isEmpty()){
+        double memoriaDisponibleMbs = (Memoria.memoriaTotalMbs - Memoria.memoriaUtilizadaMbs);
+        if(cantidadparticiones != null && !cantidadparticiones.isEmpty() && memoriaDisponibleMbs >= Double.parseDouble(cantidadparticiones)){
             try {
                 getModeloMemoria().getMemoria().setCantidadParticiones(Integer.parseInt(cantidadparticiones));
                 getModeloMemoria().particionarMemoria();
@@ -74,13 +83,24 @@ public class Modelo {
         }   
     }
     
-    public void llenarTablaParticiones(){
-         if(!getModeloMemoria().getMemoria().getParticionesUsuario().isEmpty()){
-            getGestionMemoriaForm().setTablaParticionesModel((DefaultTableModel)getGestionMemoriaForm().getjTableParticiones().getModel());
-            for (Particion particion : getModeloMemoria().getMemoria().getParticionesUsuario()) {
-                Object [] registroParticion = {particion.getNombre(),particion.getDireccionInicio(),particion.getDireccionFin(),particion.getDireccionInicioHexa(),particion.getDireccionFinHexa(),particion.getTotalMemoriaParticion(),""};
-                getGestionMemoriaForm().getTablaParticionesModel().addRow(registroParticion);
+    public void llenarTablaParticiones() {
+        if (!getModeloMemoria().getMemoria().getParticionesUsuario().isEmpty()) {
+            getGestionMemoriaForm().setTablaParticionesModel((DefaultTableModel) getGestionMemoriaForm().getjTableParticiones().getModel());
+
+            if (modeloMemoria instanceof ParticionesFijas) {
+                    for (Particion particion : getModeloMemoria().getMemoria().getParticionesUsuario()) {
+                        Object[] registroParticion = {particion.getNombre(), particion.getDireccionInicio(), particion.getDireccionFin(), particion.getDireccionInicioHexa(), particion.getDireccionFinHexa(), particion.getTotalMemoriaParticion(), ""};
+                        getGestionMemoriaForm().getTablaParticionesModel().addRow(registroParticion);
+                    }
+                   
             }
+            if (modeloMemoria instanceof ParticionesVariables) {
+                        Integer sizeList = getModeloMemoria().getMemoria().getParticionesUsuario().size();
+                        Object[] registroParticion = {getModeloMemoria().getMemoria().getParticionesUsuario().get(sizeList - 1).getNombre(), getModeloMemoria().getMemoria().getParticionesUsuario().get(sizeList - 1).getDireccionInicio(), getModeloMemoria().getMemoria().getParticionesUsuario().get(sizeList - 1).getDireccionFin(), getModeloMemoria().getMemoria().getParticionesUsuario().get(sizeList - 1).getDireccionInicioHexa(), getModeloMemoria().getMemoria().getParticionesUsuario().get(sizeList - 1).getDireccionFinHexa(), getModeloMemoria().getMemoria().getParticionesUsuario().get(sizeList - 1).getTotalMemoriaParticion(), ""};
+                        getGestionMemoriaForm().getTablaParticionesModel().addRow(registroParticion);
+                  
+            }
+
         }
     }
     
