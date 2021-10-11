@@ -3,6 +3,7 @@ package com.gestionmemoria.modelo;
 import com.gestionmemoria.vista.GestionMemoriaForm;
 import com.gestionmemoria.sistema.ModeloMemoria;
 import com.gestionmemoria.sistema.Particion;
+import com.gestionmemoria.sistema.ParticionesDinamicas;
 import com.gestionmemoria.sistema.ParticionesFijas;
 import com.gestionmemoria.sistema.Proceso;
 import com.gestionmemoria.vista.TablaProcesoCellRender;
@@ -18,6 +19,7 @@ public class Modelo {
     
     private GestionMemoriaForm gestionMemoriaForm;
     private ModeloMemoria modeloMemoria;
+    
 
     public GestionMemoriaForm getGestionMemoriaForm() {
         if(gestionMemoriaForm == null){
@@ -37,12 +39,26 @@ public class Modelo {
         getGestionMemoriaForm().setVisible(true);
     }
     
-    public void seleccionarModeloMemoria(ActionEvent e){
+    public void cambiarModeloMemoria(String modeloSeleccionado){
+        if(modeloMemoria != null){
+             getGestionMemoriaForm().setVisible(false);
+             getModeloMemoria().setNombreModelo(modeloSeleccionado);
+             gestionMemoriaForm = new GestionMemoriaForm(this);
+             iniciarAplicacion();
+        }
+    }
+    
+    public void seleccionarModeloMemoria(ActionEvent  e){
         String modeloSeleccionado = (String)((JComboBox)e.getSource()).getSelectedItem();
+        cambiarModeloMemoria(modeloSeleccionado);
         switch (modeloSeleccionado) {
             case Constants.MODEL_PARTICION_EFIJA:
                 modeloMemoria = new ParticionesFijas();
             break;
+            case Constants.MODEL_PARTICION_DINAMICA:
+                modeloMemoria = new ParticionesDinamicas();
+                getGestionMemoriaForm().getPanelConfiguracionParticiones().setVisible(false);
+            break;    
             default: 
                 System.out.println("No seleccionado");
             break;
@@ -97,14 +113,30 @@ public class Modelo {
             getGestionMemoriaForm().getjTableProcesos().setDefaultRenderer(Object.class, new TablaProcesoCellRender());
             Object [] registroProceso = {nombreProceso,data+"" ,text+"",bss+"",proceso.getTiempoEjecucion()+"",Constants.ESTADO_LISTO};
             getGestionMemoriaForm().getTablaProcesosModel().addRow(registroProceso);
+            if(modeloMemoria instanceof ParticionesDinamicas){
+                getModeloMemoria().particionarMemoria();
+                crearParticionFormulario();
+            }
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(getGestionMemoriaForm(),"Los campos Tamaño .text , Tamaño .data y Tamaño bss deben ser numericos decimales.","Error" , JOptionPane.ERROR_MESSAGE);
         }
     }
     
+    public void crearParticionFormulario(){
+         getGestionMemoriaForm().setTablaParticionesModel((DefaultTableModel)getGestionMemoriaForm().getjTableParticiones().getModel());
+         int posicionUltimaParticion = getModeloMemoria().getMemoria().getParticionesUsuario().size()-1;
+         Particion particion = getModeloMemoria().getMemoria().getParticionesUsuario().get(posicionUltimaParticion);
+         Object [] registroParticion = {particion.getNombre(),particion.getDireccionInicio(),particion.getDireccionFin(),particion.getDireccionInicioHexa(),particion.getDireccionFinHexa(),particion.getTotalMemoriaParticion(),""};
+         getGestionMemoriaForm().getTablaParticionesModel().addRow(registroParticion);
+         getGestionMemoriaForm().getjPanelMemoria().add(particion.getPanelParticionUI().getPanelParticion());
+         getGestionMemoriaForm().getjPanelMemoria().validate();
+         getGestionMemoriaForm().getjPanelMemoria().repaint();
+    }
+    
+    
     public void lanzarSimulacion(){
         if(validarComienzoSimulacion()){
-            getModeloMemoria().gestionarMemoria(getGestionMemoriaForm().getTablaProcesosModel(), getGestionMemoriaForm().getTablaParticionesModel());
+            getModeloMemoria().gestionarMemoria(getGestionMemoriaForm().getTablaProcesosModel(), getGestionMemoriaForm().getTablaParticionesModel() , getGestionMemoriaForm().getjPanelMemoria());
         }
     }
     
@@ -116,8 +148,10 @@ public class Modelo {
             validacion = false;
         }else{
             if(getModeloMemoria().getMemoria().getParticionesUsuario().isEmpty()){
-                JOptionPane.showMessageDialog(getGestionMemoriaForm(),"Debe crear al menos una partición","Error" , JOptionPane.WARNING_MESSAGE);
-                validacion = false;
+                if(modeloMemoria instanceof ParticionesFijas){
+                    JOptionPane.showMessageDialog(getGestionMemoriaForm(),"Debe crear al menos una partición","Error" , JOptionPane.WARNING_MESSAGE);
+                    validacion = false;
+                }  
             }
             if(getModeloMemoria().getProcesos().isEmpty()){
                 JOptionPane.showMessageDialog(getGestionMemoriaForm(),"Debe ingresar al menos un proceso","Error" , JOptionPane.WARNING_MESSAGE);

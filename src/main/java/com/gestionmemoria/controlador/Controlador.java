@@ -4,7 +4,6 @@ import com.gestionmemoria.vista.GestionMemoriaForm;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class Controlador {
     
     private final GestionMemoriaForm gestionMemoriaForm;
@@ -25,7 +24,7 @@ public class Controlador {
     public ActionListener seleccionModeloMemoria(){
         return new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent  e) {
                 gestionMemoriaForm.getModel().seleccionarModeloMemoria(e);
             }
         };     

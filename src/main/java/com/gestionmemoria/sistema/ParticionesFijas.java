@@ -3,8 +3,7 @@ package com.gestionmemoria.sistema;
 import static com.gestionmemoria.sistema.Memoria.pixelUltimaParticion;
 import com.gestionmemoria.utils.Constants;
 import com.gestionmemoria.utils.Utils;
-import java.util.ArrayList;
-import java.util.List;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 
@@ -34,8 +33,7 @@ public class ParticionesFijas extends ModeloMemoria{
 
     
     @Override
-    public List<Thread> gestionarMemoria(DefaultTableModel dataModelProcesos , DefaultTableModel dataModelParticiones) {
-        List<Thread> hilosEjecucion = new ArrayList<>();
+    public void gestionarMemoria(DefaultTableModel dataModelProcesos , DefaultTableModel dataModelParticiones , JPanel panelMemoria) {
         try {
             for (Proceso proceso : getProcesos()) {
                 Particion particionEjecucion = buscarParticionEjecucionProceso(proceso);
@@ -78,7 +76,6 @@ public class ParticionesFijas extends ModeloMemoria{
         }catch(Exception e){
             System.out.println("Ocurrio un error: "+e.getMessage());
         }        
-        return hilosEjecucion;
     }
     
     

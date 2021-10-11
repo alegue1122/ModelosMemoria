@@ -2,6 +2,7 @@ package com.gestionmemoria.sistema;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -9,6 +10,7 @@ public abstract class ModeloMemoria {
         
     public Memoria memoria;
     public List<Proceso> procesos;
+    public String nombreModelo;
     
     public ModeloMemoria(){
         this.memoria = new Memoria();
@@ -34,10 +36,20 @@ public abstract class ModeloMemoria {
     public int getIdProcesos(){
        return procesos.size();  
     }
+
+    public String getNombreModelo() {
+        return nombreModelo;
+    }
+
+    public void setNombreModelo(String nombreModelo) {
+        this.nombreModelo = nombreModelo;
+    }
+    
+    
     
     public abstract void particionarMemoria();
     
-    public abstract List<Thread> gestionarMemoria(DefaultTableModel dataModelProcesos, DefaultTableModel dataModelParticiones);
+    public abstract void gestionarMemoria(DefaultTableModel dataModelProcesos, DefaultTableModel dataModelParticiones , JPanel panelMemoria);
 
     
 }

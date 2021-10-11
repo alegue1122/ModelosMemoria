@@ -5,6 +5,7 @@ import com.gestionmemoria.controlador.Controlador;
 import com.gestionmemoria.utils.Constants;
 import javax.swing.table.DefaultTableModel;
 import com.gestionmemoria.modelo.Modelo;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -22,6 +23,11 @@ public class GestionMemoriaForm extends javax.swing.JFrame {
         this.modelo = modelo;
         initComponents();
         initValoresComponentes();
+        if(modelo.getModeloMemoria() != null ){
+            getComboModelosMemoria().setSelectedItem(modelo.getModeloMemoria().getNombreModelo());
+        }else{
+            getComboModelosMemoria().setSelectedItem(Constants.SELECCIONE);
+        }
         registrarEventos();
     }
 
@@ -63,7 +69,7 @@ public class GestionMemoriaForm extends javax.swing.JFrame {
         jBotonComenzarSimulacion = new javax.swing.JButton();
         comboModelosMemoria = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        panelConfiguracionParticiones = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         textCantidadParticiones = new javax.swing.JTextField();
@@ -123,8 +129,8 @@ public class GestionMemoriaForm extends javax.swing.JFrame {
 
         jLabel1.setText("Modelo Gestión Memoria:");
 
-        jPanel1.setBackground(new java.awt.Color(153, 204, 255));
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        panelConfiguracionParticiones.setBackground(new java.awt.Color(153, 204, 255));
+        panelConfiguracionParticiones.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         jLabel2.setText("Configuración Modelo");
 
@@ -137,30 +143,30 @@ public class GestionMemoriaForm extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelConfiguracionParticionesLayout = new javax.swing.GroupLayout(panelConfiguracionParticiones);
+        panelConfiguracionParticiones.setLayout(panelConfiguracionParticionesLayout);
+        panelConfiguracionParticionesLayout.setHorizontalGroup(
+            panelConfiguracionParticionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelConfiguracionParticionesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelConfiguracionParticionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(panelConfiguracionParticionesLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(textCantidadParticiones, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jBotonCrearParticiones))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelConfiguracionParticionesLayout.setVerticalGroup(
+            panelConfiguracionParticionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelConfiguracionParticionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelConfiguracionParticionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(textCantidadParticiones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(panelConfiguracionParticionesLayout.createSequentialGroup()
                         .addGap(3, 3, 3)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -357,7 +363,7 @@ public class GestionMemoriaForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelConfiguracionParticiones, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jLabel1)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -384,7 +390,7 @@ public class GestionMemoriaForm extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(comboModelosMemoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panelConfiguracionParticiones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(27, 27, 27)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
@@ -465,6 +471,18 @@ public class GestionMemoriaForm extends javax.swing.JFrame {
         return jTextProceso;
     }
 
+    public JComboBox<String> getComboModelosMemoria() {
+        return comboModelosMemoria;
+    }
+
+    public void setComboModelosMemoria(JComboBox<String> comboModelosMemoria) {
+        this.comboModelosMemoria = comboModelosMemoria;
+    }
+
+    public JPanel getPanelConfiguracionParticiones() {
+        return panelConfiguracionParticiones;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> comboModelosMemoria;
     private javax.swing.JButton jBotonComenzarSimulacion;
@@ -483,7 +501,6 @@ public class GestionMemoriaForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelMemoria;
     private javax.swing.JPanel jPanelTablaParticiones;
@@ -496,6 +513,7 @@ public class GestionMemoriaForm extends javax.swing.JFrame {
     private javax.swing.JTextField jTextDataProceso;
     private javax.swing.JTextField jTextNombreProceso;
     private javax.swing.JTextField jTextProceso;
+    private javax.swing.JPanel panelConfiguracionParticiones;
     private javax.swing.JTextField textCantidadParticiones;
     // End of variables declaration//GEN-END:variables
 }
