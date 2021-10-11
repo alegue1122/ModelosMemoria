@@ -1,5 +1,6 @@
 package com.gestionmemoria.sistema;
 
+import com.gestionmemoria.vista.GestionMemoriaForm;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;

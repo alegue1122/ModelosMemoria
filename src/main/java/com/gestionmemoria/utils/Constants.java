@@ -21,4 +21,8 @@ public class Constants {
      public static final String ESTADO_EJECUCION="En Ejecución";
      public static final String ESTADO_TERMINADO="Terminado";
      
+     //Ajustes
+     public static final String PRIMER_AJUSTE = "Primer Ajuste";
+     public static final String PEOR_AJUSTE = "Peor Ajuste";
+     public static final String MEJOR_AJUSTE = "Mejor Ajuste";
 }
