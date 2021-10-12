@@ -89,6 +89,7 @@ public class ParticionesVariables extends ModeloMemoria {
                                         @Override
                                         public void run() {
                                             particionEjecucion.getPanelParticionUI().getTextFieldProcesoParticion().setText("");
+                                              particionEjecucion.setState(false);
                                         }
                                     });
                                 }
@@ -145,9 +146,9 @@ public class ParticionesVariables extends ModeloMemoria {
         Particion particionLibre = null;
         double min = process.getCantidadMemoriaProceso();
         for (Particion particion : getMemoria().getParticionesUsuario()) {
-            if (particion.getTotalMemoriaParticion() > process.getCantidadMemoriaProceso() && (!particion.isState())) {
+            if (particion.getTotalMemoriaParticion() >= process.getCantidadMemoriaProceso() && (!particion.isState())) {
 
-                if (min > particion.getTotalMemoriaParticion() - process.getCantidadMemoriaProceso()) {
+                if (min >= particion.getTotalMemoriaParticion() - process.getCantidadMemoriaProceso()) {
                     min = particion.getTotalMemoriaParticion() - process.getCantidadMemoriaProceso();
                     particion.setProcesoEnParticion(process.getNombreProceso());
                     particionLibre = particion;
